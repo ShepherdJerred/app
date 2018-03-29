@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import { TouchableHighlight } from 'react-native';
+import { TouchableHighlight, Text, View } from 'react-native';
 import AppButton from "./app-button";
 
 export default class TouchableButton extends Component {
-  constructor(props){
+
+  isPressed;
+
+  constructor (props) {
     super(props);
-    console.error(props);
-    this.press = this.press.bind(this);
+    console.log(props);
+    this.isPressed = false;
+  }
+
+  handlePressIn () {
+    console.log('in');
+    this.isPressed = true;
+  }
+
+  handlePressOut () {
+    console.log('out');
+    this.props.handlePress();
+    this.isPressed = false;
   }
 
   render () {
     return (
-      <TouchableHighlight onPress={
-        this.props.press
-      }>
+      <View>
+        <Text>Press: { this.isPressed }</Text>
+
+        <TouchableHighlight onPressIn={this.handlePressIn.bind(this)} onPressOut={this.handlePressOut.bind(this)}
+                          isPressed={this.isPressed}>
         <AppButton/>
       </TouchableHighlight>
+      </View>
     );
   }
 }

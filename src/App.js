@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import TouchableButton from './components/touchable-button';
+import io from 'socket.io-client';
 
 export default class App extends Component<Props> {
+  counter;
+  users;
+  socket;
+
   constructor () {
     super();
-    this.handlePress = this.handlePress.bind(this);
+
+    this.socket = io('https://the-button-api.herokuapp.com/');
+
+    this.socket.on('counterStatus', function (data) {
+      this.counter = data;
+      console.log(this.counter);
+    });
+
+    this.socket.on('connectedUsers', function (data) {
+      this.users = data;
+      console.log(this.users);
+    });
+
+    this.socket.emit('getCounter');
+    this.socket.emit('getConnectedUsers');
   }
 
   handlePress () {
-    console.warn('TEST');
+    this.socket.emit('incrementCounter');
   }
 
   render () {
     return (
       <View>
-        <TouchableButton press={this.handlePress}/>
+        <TouchableButton handlePress={this.handlePress.bind(this)}/>
       </View>
     );
   }
