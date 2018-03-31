@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import * as util from '../util';
 
 export default class AppButton extends Component {
 
   constructor (props) {
     super(props);
+    console.log(props);
   }
 
   render () {
     return (
       <View>
-        <Text>PRESSED?: {this.props.isPressed}</Text>
         <View
           style={[
             this.styles.buttonLayer,
@@ -32,6 +32,7 @@ export default class AppButton extends Component {
             this.styles.buttonShadow
           ]}>
         </View>
+        <Text>Pressed: {this.props.isPressed}</Text>
       </View>
     );
   }
@@ -42,7 +43,7 @@ export default class AppButton extends Component {
       width: util.vw(50),
       borderRadius: util.vw(50) / 2,
       padding: 20,
-      position: 'absolute'
+      position: 'relative',
     },
     buttonTop: {
       zIndex: 3
@@ -56,12 +57,12 @@ export default class AppButton extends Component {
     buttonDepth: {
       backgroundColor: 'rgb(187, 23, 23)',
       zIndex: 2,
-      top: 15,
+      top: util.vw(50) * - 1 + 15,
     },
     buttonShadow: {
       backgroundColor: 'rgb(209, 209, 209)',
       zIndex: 1,
-      top: 20
+      top: util.vw(100) * - 1 + 20,
     },
   });
 }
