@@ -88,8 +88,17 @@ export default class App extends Component {
             }}>
               <TouchableButton handlePress={this.handlePress.bind(this)}/>
             </View>
-            <AppProgress button={this.state.counter}/>
-            <AppUsers users={this.state.users}/>
+            <View style={{
+              width: util.vw(50),
+              paddingTop: 40
+            }}>
+              <AppProgress value={this.state.counter.currentValue} max={this.state.counter.maxValue}/>
+            </View>
+            <View style={{
+              paddingTop: 20
+            }}>
+              <AppUsers users={this.state.users}/>
+            </View>
           </View>
         );
       } else {
