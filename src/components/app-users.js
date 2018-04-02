@@ -20,7 +20,7 @@ export default class AppUsers extends Component {
   render () {
     return (
       <View>
-        <Text>There are {this.generateConnectedUsersPhrase()}</Text>
+        <Text>{this.generateConnectedUsersPhrase()}</Text>
       </View>
     );
   }

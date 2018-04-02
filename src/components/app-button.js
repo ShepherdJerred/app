@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet} from 'react-native';
 import * as util from '../util';
+import PropTypes from 'prop-types';
 
 export default class AppButton extends Component {
-
   constructor (props) {
     super(props);
-    console.log(props);
+    console.log('app-button props: ' + JSON.stringify(props));
   }
 
   render () {
@@ -14,55 +14,60 @@ export default class AppButton extends Component {
       <View>
         <View
           style={[
-            this.styles.buttonLayer,
-            this.styles.buttonTop,
-            !this.props.isPressed && this.styles.buttonTopUnpushed,
-            this.props.isPressed && this.styles.buttonTopPushed
+            this.stylesheet.buttonLayer,
+            this.stylesheet.buttonTop,
+            this.props.isPressed ? this.stylesheet.buttonTopPushed : this.stylesheet.buttonTopUnpushed
           ]}>
         </View>
         <View
           style={[
-            this.styles.buttonLayer,
-            this.styles.buttonDepth
+            this.stylesheet.buttonLayer,
+            this.stylesheet.buttonDepth
           ]}>
         </View>
         <View
           style={[
-            this.styles.buttonLayer,
-            this.styles.buttonShadow
+            this.stylesheet.buttonLayer,
+            this.stylesheet.buttonShadow
           ]}>
         </View>
-        <Text>Pressed: {this.props.isPressed}</Text>
       </View>
     );
   }
 
-  styles = StyleSheet.create({
+  stylesheet = StyleSheet.create({
     buttonLayer: {
       height: util.vw(50),
       width: util.vw(50),
       borderRadius: util.vw(50) / 2,
       padding: 20,
-      position: 'relative',
+      position: 'absolute',
+      left: util.vw(25) * -1,
+      right: util.vw(25) * -1,
+      marginTop: -20
     },
     buttonTop: {
       zIndex: 3
     },
     buttonTopUnpushed: {
-      backgroundColor: 'rgb(232, 69, 69)',
+      backgroundColor: 'rgb(232, 69, 69)'
     },
     buttonTopPushed: {
-      backgroundColor: 'rgb(227, 29, 29)',
+      backgroundColor: 'rgb(227, 29, 29)'
     },
     buttonDepth: {
       backgroundColor: 'rgb(187, 23, 23)',
       zIndex: 2,
-      top: util.vw(50) * - 1 + 15,
+      top: 15
     },
     buttonShadow: {
       backgroundColor: 'rgb(209, 209, 209)',
       zIndex: 1,
-      top: util.vw(100) * - 1 + 20,
-    },
+      top: 20
+    }
   });
 }
+
+AppButton.propTypes = {
+  isPressed: PropTypes.bool.isRequired
+};

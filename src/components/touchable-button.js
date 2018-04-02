@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import AppButton from "./app-button";
+import React, {Component} from 'react';
+import {TouchableOpacity, View} from 'react-native';
+import AppButton from './app-button';
+import PropTypes from 'prop-types';
 
 export default class TouchableButton extends Component {
-
   constructor (props) {
     super(props);
     console.log(props);
@@ -15,32 +15,35 @@ export default class TouchableButton extends Component {
   handlePressIn () {
     console.log('in');
     this.setState(previousState => {
-      return {
-        isPressed: true
-      }
+      previousState.isPressed = true;
+      return previousState;
     });
+    console.log(this.state);
   }
 
   handlePressOut () {
     console.log('out');
     this.props.handlePress();
     this.setState(previousState => {
-      return {
-        isPressed: true
-      }
+      previousState.isPressed = false;
+      return previousState;
     });
+    console.log(this.state);
   }
 
   render () {
     return (
       <View>
         <TouchableOpacity onPressIn={this.handlePressIn.bind(this)}
-                          onPressOut={this.handlePressOut.bind(this)}
-                          isPressed={this.state.isPressed}
-                          activeOpacity={1}>
-          <AppButton/>
+          onPressOut={this.handlePressOut.bind(this)}
+          activeOpacity={1}>
+          <AppButton isPressed={this.state.isPressed}/>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+TouchableButton.propTypes = {
+  handlePress: PropTypes.func.isRequired
+};

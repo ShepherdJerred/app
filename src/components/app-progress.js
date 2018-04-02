@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import * as util from '../util';
+import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default class AppButton extends Component {
-
-  constructor (props) {
-    super(props);
-  }
-
   render () {
     return (
-      <View>
-        <Text>{this.props.button.currentValue} / {this.props.button.maxValue}</Text>
+      <View style={[
+        this.stylesheet.background
+      ]}>
+        <View style={[
+          this.stylesheet.fill
+        ]}/>
       </View>
     );
   }
 
-  styles = StyleSheet.create({
+  stylesheet = StyleSheet.create({
+    background: {
+      height: 20,
+      backgroundColor: '#000'
+    },
+    fill: {
+      height: 20,
+      backgroundColor: '#000'
+    }
   });
 }
+
+AppButton.propTypes = {
+  button: PropTypes.object.isRequired
+};
