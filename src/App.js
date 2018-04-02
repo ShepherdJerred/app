@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
-import TouchableButton from './components/touchable-button';
+import AppButton from './components/app-button';
 import AppProgress from './components/app-progress';
 import io from 'socket.io-client';
 import AppUsers from './components/app-users';
@@ -86,7 +86,7 @@ export default class App extends Component {
             <View style={{
               paddingBottom: util.vw(50)
             }}>
-              <TouchableButton handlePress={this.handlePress.bind(this)}/>
+              <AppButton handlePress={this.handlePress.bind(this)}/>
             </View>
             <View style={{
               width: util.vw(50),

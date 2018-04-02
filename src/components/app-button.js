@@ -1,37 +1,57 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
-import * as util from '../util';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import PropTypes from 'prop-types';
+import * as util from '../util';
 
 export default class AppButton extends Component {
   constructor (props) {
     super(props);
-    console.log('app-button props: ' + JSON.stringify(props));
+    this.state = {
+      isPressed: false
+    };
+  }
+
+  handlePressIn () {
+    this.setState(previousState => {
+      previousState.isPressed = true;
+      return previousState;
+    });
+  }
+
+  handlePressOut () {
+    this.props.handlePress();
+    this.setState(previousState => {
+      previousState.isPressed = false;
+      return previousState;
+    });
   }
 
   render () {
     return (
-      <View>
-        <View
-          style={[
-            this.stylesheet.buttonLayer,
-            this.stylesheet.buttonTop,
-            this.props.isPressed ? this.stylesheet.buttonTopPushed : this.stylesheet.buttonTopUnpushed
-          ]}>
+      <TouchableWithoutFeedback onPressIn={this.handlePressIn.bind(this)}
+        onPressOut={this.handlePressOut.bind(this)}>
+        <View>
+          <View
+            style={[
+              this.stylesheet.buttonLayer,
+              this.stylesheet.buttonShadow
+            ]}>
+          </View>
+          <View
+            style={[
+              this.stylesheet.buttonLayer,
+              this.stylesheet.buttonDepth
+            ]}>
+          </View>
+          <View
+            style={[
+              this.stylesheet.buttonLayer,
+              this.stylesheet.buttonTop,
+              this.state.isPressed ? this.stylesheet.buttonTopPushed : this.stylesheet.buttonTopUnpushed
+            ]}>
+          </View>
         </View>
-        <View
-          style={[
-            this.stylesheet.buttonLayer,
-            this.stylesheet.buttonDepth
-          ]}>
-        </View>
-        <View
-          style={[
-            this.stylesheet.buttonLayer,
-            this.stylesheet.buttonShadow
-          ]}>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -41,13 +61,9 @@ export default class AppButton extends Component {
       width: util.vw(50),
       borderRadius: util.vw(50) / 2,
       padding: 20,
-      position: 'absolute',
-      left: util.vw(25) * -1,
-      right: util.vw(25) * -1,
-      marginTop: -20
+      position: 'absolute'
     },
     buttonTop: {
-      zIndex: 3
     },
     buttonTopUnpushed: {
       backgroundColor: 'rgb(232, 69, 69)'
@@ -57,17 +73,15 @@ export default class AppButton extends Component {
     },
     buttonDepth: {
       backgroundColor: 'rgb(187, 23, 23)',
-      zIndex: 2,
       top: 15
     },
     buttonShadow: {
       backgroundColor: 'rgb(209, 209, 209)',
-      zIndex: 1,
       top: 20
     }
   });
 }
 
 AppButton.propTypes = {
-  isPressed: PropTypes.bool.isRequired
+  handlePress: PropTypes.func.isRequired
 };
